@@ -1,17 +1,22 @@
+environment:
+  USERNAME: workspace
+
 services:
   tunnel:
     restart: always
     build:
       context: .
+    args:
+      username: ${USERNAME}
     hostname: vscode-tunnel
-    working_dir: /home/workspace
+    working_dir: /home/${USERNAME}
     volumes:
-      - workspace:/home/workspace
+      - workspace:/home/${USERNAME}
 
 volumes:
   workspace:
     driver_opts:
       type: none
-      device: $PWD/workspace
+      device: $PWD/${USERNAME}
       o: bind
       user: "1000:1000"
